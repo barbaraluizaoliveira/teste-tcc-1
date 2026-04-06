@@ -129,3 +129,19 @@ export const InstagramTag = styled.div`
   font-family: ${props => props.theme.fonts.titles};
   color: ${props => props.theme.colors.black};
 `;
+
+export const EmailDisplay = styled.div`
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: ${props => props.theme.colors.darkGray};
+  font-family: ${props => props.theme.fonts.body};
+  text-align: left;
+
+  span {
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 8px;
+    color: ${props => props.theme.colors.black};
+    font-weight: 600;
+  }
+`;

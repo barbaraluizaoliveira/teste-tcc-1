@@ -1,17 +1,18 @@
-// src/pages/Login/index.tsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import type { LoginFormData } from './types';
 import karrankaLogo from '../../assets/karranka-curta.png';
 
 export const LoginPage: React.FC = () => {
-  // Estado para os dados
+  const navigate = useNavigate();
+  const cartItems = []; // Substituir pelo seu hook useCart futuramente
+
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
     password: ''
   });
 
-  // ESTADO DA ETAPA: 'email' ou 'password'
   const [step, setStep] = useState<'email' | 'password'>('email');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,16 +24,16 @@ export const LoginPage: React.FC = () => {
     e.preventDefault();
     
     if (step === 'email') {
-      // Aqui você poderia até validar se o e-mail existe no seu banco Java
-      console.log("E-mail validado, indo para senha...");
       setStep('password');
     } else {
-      console.log("Enviando login completo para o Backend:", formData);
-      // Aqui seria o seu login final
+      if (cartItems.length > 0) {
+        navigate('/checkout');
+      } else {
+        navigate('/');
+      }
     }
   };
 
-  // Função para voltar (caso o usuário erre o e-mail)
   const handleBack = () => setStep('email');
 
   return (
@@ -43,8 +44,6 @@ export const LoginPage: React.FC = () => {
         <S.Title>Acesso do Cliente</S.Title>
 
         <S.Form onSubmit={handleNextStep}>
-          
-          {/* ETAPA 1: EMAIL */}
           {step === 'email' && (
             <>
               <S.Input 
@@ -60,13 +59,11 @@ export const LoginPage: React.FC = () => {
             </>
           )}
 
-          {/* ETAPA 2: SENHA (Estilo Gocase) */}
           {step === 'password' && (
             <>
-              {/* Mostra o e-mail que ele digitou para conferir */}
-              <div style={{ marginBottom: '10px', fontSize: '14px', color: '#666' }}>
-                {formData.email} <span onClick={handleBack} style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '5px' }}>(alterar)</span>
-              </div>
+              <S.EmailDisplay>
+                {formData.email} <span onClick={handleBack}>(alterar)</span>
+              </S.EmailDisplay>
               
               <S.Input 
                 type="password" 
@@ -80,15 +77,12 @@ export const LoginPage: React.FC = () => {
               <S.SubmitButton type="submit">Entrar</S.SubmitButton>
             </>
           )}
-
         </S.Form>
 
-        {/* O Google e os links só aparecem na primeira etapa ou em ambas? 
-            Na Gocase eles costumam ficar na primeira. Vou manter aqui: */}
         {step === 'email' && (
           <>
             <S.Divider>ou</S.Divider>
-            <S.GoogleButton type="button" onClick={() => console.log("Google Login")}>
+            <S.GoogleButton type="button">
               <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google" />
               Continuar com o Google
             </S.GoogleButton>
