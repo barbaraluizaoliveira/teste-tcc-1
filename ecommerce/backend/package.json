@@ -3,6 +3,13 @@
     "@prisma/client": "^7.7.0"
   },
   "devDependencies": {
-    "prisma": "^7.7.0"
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "prisma": "^7.7.0",
+    "ts-jest": "^29.4.9",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
